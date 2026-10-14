@@ -1,104 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mvm</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">     
-    <link rel="icon" href="img/L.png">
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MVM - Iniciar sesión</title>
+<style>
+:root{--red:#e50914;--ink:#fff;--muted:#c9d6dc;--glass:rgba(8,28,38,.55);--line:rgba(255,255,255,.28);--ok:#5be0a6;--err:#ff7b7b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:#06222c;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:linear-gradient(120deg,#021b2b,#006d77,#0a2e8a,#00b4a6,#021b2b);background-size:400% 400%;animation:shift 14s ease-in-out infinite}
+@keyframes shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.65;animation:drift 16s ease-in-out infinite alternate}
+.b1{width:46vmax;height:46vmax;background:#00f5d4;left:-12vmax;top:-14vmax}
+.b2{width:40vmax;height:40vmax;background:#3a86ff;right:-10vmax;bottom:-12vmax;animation-duration:20s}
+.b3{width:28vmax;height:28vmax;background:#ff2e63;left:55%;top:8%;opacity:.4;animation-duration:24s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(8vmax,6vmax) scale(1.2)}}
+.bg svg{position:absolute;inset:0;width:100%;height:100%}
+.ecg{stroke-dasharray:420 1400;animation:ecg 4.5s linear infinite;filter:drop-shadow(0 0 8px #00fff0)}
+@keyframes ecg{from{stroke-dashoffset:1820}to{stroke-dashoffset:0}}
+.dna{animation:dna 6s ease-in-out infinite alternate}
+@keyframes dna{from{opacity:.35;transform:translateY(-10px)}to{opacity:.8;transform:translateY(10px)}}
+.float{position:absolute;bottom:-60px;color:rgba(255,255,255,.35);font-weight:900;line-height:1;animation:rise linear infinite;text-shadow:0 0 14px rgba(255,255,255,.6)}
+@keyframes rise{from{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}to{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+.pill{position:absolute;bottom:-60px;width:34px;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff2e63 50%,#fff 50%);opacity:.5;animation:rise linear infinite}
+.card{position:relative;z-index:1;width:100%;max-width:420px;padding:40px 34px 32px;border-radius:14px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px) saturate(130%);-webkit-backdrop-filter:blur(14px) saturate(130%);box-shadow:0 20px 60px rgba(0,0,0,.45);animation:enter .8s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes enter{from{opacity:0;transform:translateY(30px) scale(.94)}to{opacity:1;transform:none}}
+.logo{font-family:Impact,"Arial Narrow Bold",sans-serif;font-size:58px;letter-spacing:3px;color:var(--red);margin:0 0 6px;line-height:1;text-shadow:0 2px 12px rgba(229,9,20,.35)}
+.sub{margin:0 0 22px;color:var(--muted);font-size:14px}
+h2{font-size:24px;margin:0 0 18px;font-weight:600}
+label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
+input{width:100%;padding:14px;margin-bottom:16px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.12);color:#fff;font-size:16px;outline:none}
+input::placeholder{color:rgba(255,255,255,.55)}
+input:focus-visible{border-color:#fff;background:rgba(255,255,255,.2);box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+button.main{position:relative;overflow:hidden;width:100%;padding:14px;border:0;border-radius:6px;background:linear-gradient(90deg,#e50914,#ff3d4a,#e50914);background-size:200% 100%;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s,background-position .5s;animation:pulse 2.4s ease-in-out infinite}
+button.main::before{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);transition:left .6s}
+button.main:hover{background-position:100% 0;transform:translateY(-3px);box-shadow:0 10px 26px rgba(229,9,20,.55)}
+button.main:hover::before{left:130%}
+button.main:active{transform:translateY(0) scale(.96)}
+button.main.busy{pointer-events:none;opacity:.85}
+button.main.busy::after{content:"";display:inline-block;width:14px;height:14px;margin-left:10px;vertical-align:-2px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(229,9,20,.55)}50%{box-shadow:0 0 0 10px rgba(229,9,20,0)}}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.6);transform:scale(0);animation:rip .6s ease-out;pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+button.main:focus-visible,.link:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.msg{min-height:20px;margin:0 0 12px;font-size:14px}
+.msg.err{color:var(--err)}.msg.ok{color:var(--ok)}
+.switch{margin:20px 0 0;font-size:14px;color:var(--muted)}
+.link{background:none;border:0;color:#fff;font:inherit;font-weight:700;cursor:pointer;padding:0 0 2px;background-image:linear-gradient(#fff,#fff);background-size:100% 2px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .3s,color .3s}
+.link:hover{background-size:100% 100%;color:#06222c}
+.link:active{transform:scale(.95)}
+.hint{font-size:12px;color:var(--muted);margin:-8px 0 16px}
+.hidden{display:none}
+.welcome{text-align:center}
+.welcome p{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
-  <section class="vh-100" style="background-color: #eee;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-xl-10">
-                <div class="card" style="border-radius: 1rem;">
-                    <div class="row g-0">
-                        <div class="col-md-6 col-lg-5 d-none d-md-block">
-                            <img src="img/p.jpg"
-                                 alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
-                        </div>
-                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                            <div class="card-body p-4 p-lg-5 text-black">
+<div class="bg" aria-hidden="true">
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+<path d="M0 560 H260 L300 500 L350 640 L410 380 L470 600 L510 560 H760 L800 520 L840 600 L880 560 H1200" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="3"/>
+<path class="ecg" d="M0 560 H260 L300 500 L350 640 L410 380 L470 600 L510 560 H760 L800 520 L840 600 L880 560 H1200" fill="none" stroke="#7dfff4" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="dna" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="3">
+<path d="M1000 60 C1110 130 890 200 1000 270 S1110 410 1000 480"/><path d="M1090 60 C980 130 1200 200 1090 270 S980 410 1090 480"/>
+<path d="M1010 95H1080M1000 165H1090M1010 235H1080M1020 305H1070M1010 375H1080M1020 445H1070" stroke="rgba(255,46,99,.8)"/>
+</g>
+<g class="dna" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2" style="animation-delay:-3s">
+<circle cx="150" cy="170" r="60"/><circle cx="150" cy="170" r="38"/><circle cx="1080" cy="680" r="46"/>
+</g>
+</svg>
+</div>
 
-                                <form id="loginForm">
+<main class="card">
+<h1 class="logo">MVM</h1>
+<p class="sub">Acceso con correo institucional</p>
 
-                                    <div class="d-flex align-items-center mb-3 pb-1">
-
-                                        <span class="h1 fw-bold mb-0">Iniciar Sesion</span>
-                                    </div>
-
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inicia sesión en tu cuenta</h5>
-
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                        <label for="username" class="form-label">Usuario</label>
-                                        <input type="text" class="form-control" id="username" placeholder="Usuario">
-                                    </div>
-
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                        <label for="password" class="visually-hidden">Contraseña</label>
-                                        <input type="password" class="form-control" id="password" placeholder="Contraseña">
-                                    </div>
-
-                                    <div class="pt-1 mb-4">
-                                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">Ingresar</button>
-                                    </div>
-
-                                    <a class="small text-muted" href="#!">¿Has olvidado tu contraseña?</a>
-                                    <p class="mb-5 pb-lg-2" style="color: #444444;">¿No tienes una cuenta?<a href="registro.html"
-                                                                                                        style="color: #393f81;">
-                                            Regístrate aquí</a></p>
-
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<section id="login">
+<h2>Iniciar sesión</h2>
+<form id="fLogin" novalidate>
+<label for="lEmail">Correo institucional</label>
+<input id="lEmail" type="email" placeholder="@itocotlan.com" autocomplete="username">
+<label for="lPass">Contraseña</label>
+<input id="lPass" type="password" placeholder="Tu número de control" autocomplete="current-password">
+<p class="msg" id="lMsg" role="alert"></p>
+<button class="main" type="submit">Iniciar sesión</button>
+</form>
+<p class="switch">¿Primera vez? <button class="link" data-go="register">Regístrate</button></p>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<section id="register" class="hidden">
+<h2>Crear cuenta</h2>
+<form id="fReg" novalidate>
+<label for="rEmail">Correo institucional</label>
+<input id="rEmail" type="email" placeholder="@itocotlan.com" autocomplete="username">
+<label for="rPass">Contraseña</label>
+<input id="rPass" type="password" placeholder="Tu número de control" autocomplete="new-password">
+<p class="hint">La contraseña es tu número de control.</p>
+<p class="msg" id="rMsg" role="alert"></p>
+<button class="main" type="submit">Registrarme</button>
+</form>
+<p class="switch">¿Ya te registraste? <button class="link" data-go="login">Inicia sesión</button></p>
+</section>
+
+<section id="welcome" class="hidden welcome">
+<h2>Bienvenido</h2>
+<p id="wUser"></p>
+<button class="main" id="logout" type="button">Cerrar sesión</button>
+</section>
+</main>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const loginForm = document.getElementById('loginForm');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
+const DOMAIN = "@itocotlan.com";
+const KEY = "mvm_users";
+const $ = id => document.getElementById(id);
 
-        // Credenciales predefinidas por el desarrollador
-        const validUsername = "yeris";
-        const validPassword = "123";
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
+function save(u){ try{ localStorage.setItem(KEY, JSON.stringify(u)); return true; }catch(e){ return false; } }
 
-        loginForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+// Devuelve { control } si el correo es válido, o { error }
+function checkEmail(email){
+  email = email.trim().toLowerCase();
+  if(!email.endsWith(DOMAIN)) return { error: "Solo se aceptan correos institucionales (" + DOMAIN + ")." };
+  const control = email.slice(0, -DOMAIN.length);
+  if(!/^\d{8}$/.test(control)) return { error: "El correo debe ser tu número de control de 8 dígitos seguido de " + DOMAIN };
+  const year = parseInt(control.slice(0,2), 10);
+  if(year < 20 || year > 26) return { error: "Número de control no válido: el año de ingreso debe ser del 20 al 26." };
+  return { email, control };
+}
 
-            const enteredUsername = usernameInput.value;
-            const enteredPassword = passwordInput.value;
+async function hash(t){
+  try{
+    const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
+    return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("");
+  }catch(e){ return btoa(t); }
+}
 
-            if (enteredUsername === validUsername && enteredPassword === validPassword) {
-                Swal.fire({
-                    title: "Acceso concedido",
-                    icon: "success",
-                    draggable: true
-                }).then((result) => {
-                    // Redirigir a inicio.html después de que el usuario cierre la alerta
-                    window.location.href = "inicio.html";
-                });
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Credenciales incorrectas. Por favor, inténtalo de nuevo.",
-                    footer: '<a href="#">¿Por qué tengo este problema?</a>'
-                });
-            }
-        });
-    });
+function show(id){
+  ["login","register","welcome"].forEach(s => $(s).classList.toggle("hidden", s !== id));
+  $("lMsg").textContent = ""; $("rMsg").textContent = "";
+}
+function say(el, text, type){ el.textContent = text; el.className = "msg " + type; }
+
+document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", e => { e.preventDefault(); show(b.dataset.go); }));
+
+$("fReg").addEventListener("submit", async e => {
+  e.preventDefault();
+  const m = $("rMsg"), r = checkEmail($("rEmail").value), pass = $("rPass").value.trim();
+  if(r.error) return say(m, r.error, "err");
+  if(pass !== r.control) return say(m, "La contraseña debe ser tu número de control (" + r.control + ").", "err");
+  const users = load();
+  if(users[r.email]) return say(m, "Este correo ya está registrado. Inicia sesión.", "err");
+  users[r.email] = await hash(pass);
+  if(!save(users)) return say(m, "No se pudo guardar el registro en este navegador.", "err");
+  $("fReg").reset();
+  show("login");
+  $("lEmail").value = r.email;
+  say($("lMsg"), "Registro exitoso. Ahora inicia sesión.", "ok");
+});
+
+$("fLogin").addEventListener("submit", async e => {
+  e.preventDefault();
+  const m = $("lMsg"), r = checkEmail($("lEmail").value), pass = $("lPass").value.trim();
+  if(r.error) return say(m, r.error, "err");
+  const users = load();
+  if(!users[r.email]) return say(m, "Este correo aún no está registrado. Regístrate primero.", "err");
+  if(users[r.email] !== await hash(pass) || pass !== r.control) return say(m, "Contraseña incorrecta.", "err");
+  $("wUser").textContent = r.email;
+  $("fLogin").reset();
+  show("welcome");
+});
+
+$("logout").addEventListener("click", () => show("login"));
+
+// Cruces y pastillas flotantes
+(function(){
+  const bg = document.querySelector(".bg");
+  for(let i=0;i<22;i++){
+    const el = document.createElement("div");
+    const pill = i % 4 === 0;
+    el.className = pill ? "pill" : "float";
+    if(!pill){ el.textContent = "+"; el.style.fontSize = (22 + Math.random()*46) + "px"; }
+    el.style.left = (Math.random()*100) + "%";
+    el.style.animationDuration = (9 + Math.random()*13) + "s";
+    el.style.animationDelay = (-Math.random()*20) + "s";
+    bg.appendChild(el);
+  }
+})();
+
+// Ondas al hacer clic en los botones
+document.querySelectorAll("button.main").forEach(b => b.addEventListener("click", e => {
+  const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height);
+  const s = document.createElement("span");
+  s.className = "ripple";
+  s.style.cssText = "width:" + d + "px;height:" + d + "px;left:" + (e.clientX - r.left - d/2) + "px;top:" + (e.clientY - r.top - d/2) + "px";
+  b.appendChild(s);
+  setTimeout(() => s.remove(), 600);
+  if(b.type === "submit"){ b.classList.add("busy"); setTimeout(() => b.classList.remove("busy"), 700); }
+}));
 </script>
 </body>
 </html>
-
