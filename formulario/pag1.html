@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cuestionario</title>
+    <link rel="stylesheet" href="../estilo/pag1.css">
+</head>
+<body>
+
+    <div class="rectangulo">
+        <div class="prePRINCI">
+            <form id="formulario-largo">
+
+                <fieldset>
+                    <legend>1. ¿Cómo se encuentra tu nariz actualmente?</legend>
+                    <label><input type="radio" name="pre1" value="A" required> A) Respiro con normalidad, sin molestias</label>
+                    <label><input type="radio" name="pre1" value="B"> B) Ligera resequedad o cosquilleo ocasional</label>
+                    <label><input type="radio" name="pre1" value="C"> C) Goteo constante de moco transparente</label>
+                    <label><input type="radio" name="pre1" value="D"> D) Nariz congestionada o totalmente tapada</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>2. ¿Cómo percibes el dolor o pesadez en tu cabeza?</legend>
+                    <label><input type="radio" name="pre2" value="A" required> A) Bastante leve</label>
+                    <label><input type="radio" name="pre2" value="B"> B) Molesta presión en las sienes</label>
+                    <label><input type="radio" name="pre2" value="C"> C) Dolor constante al agacharme o moverme</label>
+                    <label><input type="radio" name="pre2" value="D"> D) Dolor punzante e intenso en toda la frente</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>3. ¿Qué tipo de molestia sientes en la garganta?</legend>
+                    <label><input type="radio" name="pre3" value="A" required> A) Ninguna molestia al hablar o tragar</label>
+                    <label><input type="radio" name="pre3" value="B"> B) Ligero carraspeo o resequedad leve</label>
+                    <label><input type="radio" name="pre3" value="C"> C) Ardor molesto cada vez que paso saliva</label>
+                    <label><input type="radio" name="pre3" value="D"> D) Dolor intenso e inflamación al tragar alimento</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>4. ¿Cómo notas tu temperatura corporal y escalofríos?</legend>
+                    <label><input type="radio" name="pre4" value="A" required> A) Normal, sin sensaciones extrañas</label>
+                    <label><input type="radio" name="pre4" value="B"> B) Ligera sensacion de cara caliente</label>
+                    <label><input type="radio" name="pre4" value="C"> C) Fiebre moderada acompañada de escalofríos</label>
+                    <label><input type="radio" name="pre4" value="D"> D) Fiebre alta constante con sudoración fría</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>5. ¿Cómo describirías la pesadez en tu cuerpo?</legend>
+                    <label><input type="radio" name="pre5" value="A" required> A) Con buena energía, sin dolor muscular</label>
+                    <label><input type="radio" name="pre5" value="B"> B) Cansancio en la espalda o cuello</label>
+                    <label><input type="radio" name="pre5" value="C"> C) Sensación de cuerpo cortado / pesadez en piernas</label>
+                    <label><input type="radio" name="pre5" value="D"> D) Dolor intenso que dificulta moverme</label>
+                </fieldset>
+
+                <button type="submit" class="botonE">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formulario-largo').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Arreglo reducido a las 5 preguntas activas
+            const respuestas = ['pre1', 'pre2', 'pre3', 'pre4', 'pre5'];
+            let puntosTotales = 0;
+            
+            // Valores asignados a cada opción
+            const valores = { 'A': 1, 'B': 2, 'C': 3, 'D': 4 };
+
+            for (const id of respuestas) {
+                const seleccion = document.querySelector(`input[name="${id}"]:checked`)?.value;
+                if (seleccion && valores[seleccion]) {
+                    puntosTotales += valores[seleccion];
+                }
+            }
+
+            let resultadoRuta = 1;
+            let nombrePastilla = 'Paracetamol';
+
+            // Evaluación de la suma (Mínimo: 5, Máximo: 20)
+            if (puntosTotales <= 12) {
+                resultadoRuta = 1;
+                nombrePastilla = 'Paracetamol';
+            } else {
+                resultadoRuta = 3;
+                nombrePastilla = 'Next';
+            }
+
+            // Guardado en localStorage de ambas variables
+            localStorage.setItem('resultadoRuta', resultadoRuta);
+            localStorage.setItem('nombrePastilla', nombrePastilla);
+
+            window.location.href = 'rutas.html';
+        });
+    </script>
+    
+</body>
+</html>

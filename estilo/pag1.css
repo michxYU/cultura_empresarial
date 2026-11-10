@@ -1,0 +1,140 @@
+/* Base de diseño y tipografía */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f7f9fa;
+    color: #1a1a1a;
+    padding: 16px;
+    line-height: 1.5;
+}
+
+/* El fondo principal del formulario */
+.rectangulo {
+    width: 100%;
+    max-width: 1200px; /* Evita que se estire al infinito en pantallas gigantes */
+    margin: 0 auto;
+}
+
+.prePRINCI, #formulario-largo {
+    width: 100%;
+}
+
+/* Diseño de cada bloque de pregunta (Inspirado en las tarjetas de la imagen) */
+fieldset {
+    border: 1px solid #e0e0e0;
+    border-radius: 20px; /* Bordes redondeados pronunciados como la imagen */
+    background-color: #ffffff;
+    margin-bottom: 24px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+fieldset:focus-within {
+    border-color: #a0a0a0;
+}
+
+/* Estilo del título de la pregunta */
+legend {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111111;
+    padding: 0 8px;
+    margin-bottom: 16px;
+    float: left; /* Corrige comportamiento por defecto de HTML para poder estilizarlo */
+    width: 100%;
+}
+
+/* Opciones de respuesta por defecto (Diseño móvil primero) */
+label {
+    display: flex;
+    align-items: center;
+    background-color: #fcfcfc;
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s, border-color 0.2s;
+    width: 100%;
+}
+
+label:hover {
+    background-color: #f5f5f5;
+    border-color: #dcdcdc;
+}
+
+/* Estilo de los inputs circulares (Radio) */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #b5b5b5;
+    border-radius: 50%;
+    margin-right: 12px;
+    outline: none;
+    display: grid;
+    place-content: center;
+    transition: border 0.15s ease-in-out;
+    background-color: #fff;
+    flex-shrink: 0; /* Evita que el radio se deforme si el texto es muy largo */
+}
+
+input[type="radio"]::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 0.15s transform ease-in-out;
+    background-color: #111111; /* Color del punto interior */
+}
+
+input[type="radio"]:checked {
+    border-color: #111111;
+}
+
+input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+/* Resalta toda la tarjeta de la opción cuando se selecciona */
+label:has(input[type="radio"]:checked) {
+    background-color: #f1f1f1;
+    border-color: #111111;
+}
+
+
+/* ==========================================================================
+   DISEÑO ADAPTABLE (MEDIA QUERIES)
+   ========================================================================== */
+
+/* Ajustes para pantallas medianas y grandes (Tabletas y Computadoras) */
+@media (min-width: 768px) {
+    body {
+        padding: 40px 24px;
+    }
+
+    fieldset {
+        padding: 32px;
+        margin-bottom: 32px;
+        /* Activamos flexbox dentro del fieldset para acomodar las opciones */
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    /* En compu, las respuestas se dividen perfectamente en 2 columnas */
+    label {
+        width: calc(50% - 6px); /* 50% del espacio restando la mitad del gap */
+        margin-bottom: 0; /* Cambiamos el margen por el gap del contenedor */
+        font-size: 1rem;
+    }
+}

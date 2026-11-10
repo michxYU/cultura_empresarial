@@ -1,2 +1,0 @@
-# cultura_empresarial
-

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegir pastilla</title>
+    <link rel="stylesheet" href="estilo/elegir.css">
+</head>
+<body>
+
+    <div class="fondo-diagonal"></div>
+
+    <div class="contenido-opciones">
+        
+        <div class="tarjeta-opciones">
+            
+            <h1 class="pregunta">Elige tu pastilla a comprar</h1>
+
+            <div class="contenedor-botones">
+                <button class="botonE" onclick="guardarYRedirigir(1, 'Paracetamol')">Paracetamol</button>
+                <button class="botonE" onclick="guardarYRedirigir(2, 'Syncol')">Syncol</button>
+                <button class="botonE" onclick="guardarYRedirigir(3, 'Next')">Next</button>
+                <button class="botonE" onclick="guardarYRedirigir(4, 'Omeprazol')">Omeprazol</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function guardarYRedirigir(numero, nombre) {
+            localStorage.setItem('resultadoRuta', numero);
+            localStorage.setItem('nombrePastilla', nombre);
+
+            window.location.href = 'formulario/rutas.html';
+        }
+    </script>
+
+</body>
+</html>

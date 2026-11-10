@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cuestionario</title>
+    <link rel="stylesheet" href="../estilo/pag1.css">
+</head>
+<body>
+
+    <div class="rectangulo">
+        <div class="prePRINCI">
+            <!-- Único formulario con ID para controlarlo por JavaScript -->
+            <form id="formulario-largo">
+                
+                <!-- PREGUNTA 1 -->
+                <fieldset>
+                    <legend>1. ¿Cómo describirías la intensidad del dolor en tus músculos?</legend>
+                    <label><input type="radio" name="pre1" value="A" required> A) Pesadez leve</label>
+                    <label><input type="radio" name="pre1" value="B"> B) Molestia al mover las extremidades afectadas</label>
+                    <label><input type="radio" name="pre1" value="C"> C) Contracciones musculares repetitivas / tirones</label>
+                    <label><input type="radio" name="pre1" value="D"> D) Espasmos musculares intensos</label>
+                </fieldset>
+
+                <!-- PREGUNTA 2 -->
+                <fieldset>
+                    <legend>2. ¿En qué zona específica del cuerpo se concentra la molestia?</legend>
+                    <label><input type="radio" name="pre2" value="A" required> A) En la espalda alta, hombros o cuello</label>
+                    <label><input type="radio" name="pre2" value="B"> B) En brazos, piernas o pantorrillas</label>
+                    <label><input type="radio" name="pre2" value="C"> C) En la cadera / zona baja de la espalda</label>
+                    <label><input type="radio" name="pre2" value="D"> D) En la parte baja del abdomen o vientre</label>
+                </fieldset>
+
+                <!-- PREGUNTA 3 -->
+                <fieldset>
+                    <legend>3. ¿Con qué situación se asocia la aparición del dolor?</legend>
+                    <label><input type="radio" name="pre3" value="A" required> A) Con síntomas de resfriado</label>
+                    <label><input type="radio" name="pre3" value="B"> B) Con un día pesado de actividad física</label>
+                    <label><input type="radio" name="pre3" value="C"> C) Con tensión acumulada por estrés o malas posturas</label>
+                    <label><input type="radio" name="pre3" value="D"> D) Con el ciclo menstrual / contracciones uterinas</label>
+                </fieldset>
+
+                <!-- PREGUNTA 4 -->
+                <fieldset>
+                    <legend>4. ¿Qué otro síntoma físico acompaña al dolor muscular?</legend>
+                    <label><input type="radio" name="pre4" value="A" required> A) Dolor de cabeza leve o sensación de fatiga</label>
+                    <label><input type="radio" name="pre4" value="B"> B) Rigidez al intentar estirar el músculo</label>
+                    <label><input type="radio" name="pre4" value="C"> C) Sensación de entumecimiento o calor en la zona</label>
+                    <label><input type="radio" name="pre4" value="D"> D) Inflamación pélvica o punzadas</label>
+                </fieldset>
+
+                <!-- PREGUNTA 5 -->
+                <fieldset>
+                    <legend>5. ¿Qué método te ayuda a disminuir la molestia?</legend>
+                    <label><input type="radio" name="pre5" value="A" required> A) Descansar en cama</label>
+                    <label><input type="radio" name="pre5" value="B"> B) Estiramientos suaves o masajes de relajación</label>
+                    <label><input type="radio" name="pre5" value="C"> C) Aplicar compresas tibias en la zona afectada</label>
+                    <label><input type="radio" name="pre5" value="D"> D) Aplicar calor directo en el vientre</label>
+                </fieldset>
+
+                <!-- Botón de Envío -->
+                <button type="submit" class="botonE">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script JavaScript para capturar en variables y guardar -->
+    <script>
+        document.getElementById('formulario-largo').addEventListener('submit', function(event) {
+            // Evita que la página se recargue automáticamente
+            event.preventDefault();
+
+            const respuestas = ['pre1', 'pre2', 'pre3', 'pre4', 'pre5'];
+            let puntosTotales = 0;
+            
+            // Valores asignados: A y B orientados a Paracetamol (1) | C y D orientados a Syncol (2)
+            const valores = { 'A': 1, 'B': 2, 'C': 3, 'D': 4 };
+
+            for (const id of respuestas) {
+                const seleccion = document.querySelector(`input[name="${id}"]:checked`)?.value;
+                if (seleccion && valores[seleccion]) {
+                    puntosTotales += valores[seleccion];
+                }
+            }
+
+            let resultadoRuta = 1;
+            let nombrePastilla = 'Paracetamol';
+
+            // Evaluación de puntajes (Mínimo: 5, Máximo: 20)
+            if (puntosTotales <= 12) {
+                resultadoRuta = 1;
+                nombrePastilla = 'Paracetamol';
+            } else {
+                resultadoRuta = 2;
+                nombrePastilla = 'Syncol';
+            }
+
+            // Guardamos las variables en el almacenamiento local con los nombres exactos requeridos
+            localStorage.setItem('resultadoRuta', resultadoRuta);
+            localStorage.setItem('nombrePastilla', nombrePastilla);
+
+            // Redirige a la página 'rutas.html'
+            window.location.href = 'rutas.html';
+        });
+    </script>
+    
+</body>
+</html>

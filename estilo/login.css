@@ -1,0 +1,232 @@
+/* ==========================================================================
+   1. RESET Y CONFIGURACIÓN BASE DE LA PANTALLA
+   ========================================================================== */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    background-color: #0d6e6b; /* Mantiene el verde oscuro arriba */
+    display: flex;
+    flex-direction: column; /* Organiza el bloque verde y el blanco uno abajo del otro */
+}
+
+/* ==========================================================================
+   5. CONTROL Y POSICIONAMIENTO DE LA MANCHA DE FONDO
+   ========================================================================== */
+/* ==========================================================================
+   5. DISEÑO DE LA MANCHA SUPERIOR (Ubicada ARRIBA de los textos)
+   ========================================================================= */
+/* Usamos el contenedor de la mancha como un bloque físico arriba del texto */
+/* ==========================================================================
+   5. POSICIONAMIENTO REAL DE TU IMAGEN (Físicamente arriba del texto)
+   ========================================================================== */
+/* Forzamos a que el contenedor de la mancha se coloque al inicio */
+.mancha {
+    display: block !important; /* Anula el display:none anterior */
+    width: 100%;
+    margin-top: -150px; /* Sube la imagen para pegarla al tope de la pantalla */
+    margin-bottom: -20px; /* Empuja tus textos hacia abajo para que la imagen quede ARRIBA de ellos */
+    margin-left: -90px;
+}
+
+.ima{
+    width: 200px; /* El tamaño exacto de la figura en la foto de Canva */
+    height: 250px;
+}
+
+
+/* ==========================================================================
+   2. EL SECTOR VERDE SUPERIOR (Con más espacio arriba del Hello)
+   ========================================================================== */
+.fondo-diagonal {
+    position: relative;
+    width: 100%;
+    /* MODIFICACIÓN: Subimos el primer valor a 80px para dar más espacio arriba de los textos */
+    padding: 80px 24px 30px 24px; 
+    background-color: #0d6e6b; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Alinea los textos directo a la izquierda */
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+/* Estilos limpios para tus textos sin márgenes rotos */
+.hola {
+    margin: 0;
+    font-size: 38px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.abajo {
+    margin: 5px 0 0 0;
+    font-size: 20px;
+    color: #ffffff;
+    opacity: 0.9;
+    line-height: 1.2;
+}
+
+/* Oculta los saltos de línea del HTML para evitar separaciones gigantes */
+.fondo-diagonal br {
+    display: none;
+}
+
+/* ==========================================================================
+   3. EL FONDO INFERIOR BLANCO (Líquido, ocupa el espacio restante y estira)
+   ========================================================================== */
+.contenido-login {
+    position: relative;
+    width: 100%;
+    flex: 1; /* Ocupa de manera exacta todo el espacio restante de la pantalla */
+    background-color: #f1f5f4; /* El color blanco/gris claro inferior */
+    
+    /* ESQUINAS REDONDAS SUPERIORES SIEMPRE VISIBLES */
+    border-top-left-radius: 45px !important;
+    border-top-right-radius: 45px !important;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 2;
+    box-sizing: border-box;
+    padding-bottom: 30px; /* Evita que el botón pegue contra el borde inferior */
+}
+
+/* ==========================================================================
+   6. IMAGEN FLOTANTE JUSTO EN LA LÍNEA DIVISORIA
+   ========================================================================== */
+.mancha2{
+    position: absolute;
+    top: 0;
+    transform: translateY(-50%);
+    
+    /* Controla la posición horizontal: la manda a la derecha con un margen limpio */
+    right: 40px; 
+    z-index: 10; /* Asegura que se quede por encima del fondo verde y el blanco */
+}
+
+.ima2{
+    width: 100px;  /* Ajusta el ancho que quieras para tu imagen */
+    height: 100px; /* Ajusta el alto que quieras para tu imagen */
+}
+
+
+/* Limpieza del contenedor interno */
+/* ==========================================================================
+   ALINEACIÓN TOTAL HACIA LA IZQUIERDA (Estilo responsivo fluido)
+   ========================================================================== */
+
+/* ==========================================================================
+   TEXTOS A LA IZQUIERDA Y CAMPOS CENTRADOS CON MÁS ESPACIO
+   ========================================================================== */
+
+.tarjeta-login {
+    background-color: transparent; 
+    width: 100%; 
+    max-width: 100%; 
+    padding: 40px 24px 10px 24px; 
+    display: flex;
+    flex-direction: column;
+    /* Centra el formulario en medio de la pantalla blanca */
+    align-items: center; 
+    box-sizing: border-box;
+    box-shadow: none; 
+}
+
+.titulo-principal {
+    width: 100%;
+    max-width: 340px; /* Hace que mida lo mismo que el formulario */
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
+    text-align: left; /* Forzamos a que solo tus textos se queden alineados a la izquierda */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Mantiene la caja de texto y el botón centrados uno con otro */
+    width: 100%;
+    max-width: 340px; 
+    /* AUMENTAMOS EL ESPACIO: Dejamos 25px de separación vertical entre la caja y el botón */
+    gap: 25px !important; 
+    margin-top: 20px !important; /* Espacio cómodo entre el título y la caja de texto */
+}
+
+
+
+/* Ocultar la imagen anterior */
+.mvm {
+    display: none;
+}
+
+/* Tus textos originales "wawa awaw" */
+.linea-arriba {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 750;
+    font-size: 32px;
+    color: #0d6e6b; 
+    letter-spacing: -1px;
+}
+
+.linea-abajo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 22px; 
+    color: #0a5250;
+}
+
+
+/* Entradas de texto ovaladas */
+.caja-texto {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #ffffff; 
+    border-radius: 30px; 
+    box-sizing: border-box;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.caja-texto:focus {
+    box-shadow: 0 0 0 2px #0d6e6b;
+}
+
+/* Botón adaptado */
+.botonE {
+    background-color: #0d6e6b;
+    border: none;
+    color: #ffffff;
+    border-radius: 30px;
+    padding: 16px 0;
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.botonE:hover {
+    background-color: #0a5250;
+}
+
+#mensaje-error {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* ==========================================================================
+   REDUCIR ESPACIOS ENTRE EL TÍTULO Y EL CAMPO DE TEXTO
+   ========================================================================== */
+
+/* 1. Reducimos el margen de tus títulos */
+

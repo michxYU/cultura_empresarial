@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cuestionario</title>
+    <link rel="stylesheet" href="../estilo/pag1.css">
+</head>
+<body>
+
+    <div class="rectangulo">
+        <div class="prePRINCI">
+            <form id="formulario-largo">
+
+                <fieldset>
+                    <legend>1. ¿Cómo describirías el dolor abdominal?</legend>
+                    <label><input type="radio" name="pre1" value="A" required> A) Espasmos que van y vienen, como retorcijones</label>
+                    <label><input type="radio" name="pre1" value="B"> B) Sensación de hinchazón e inflamación</label>
+                    <label><input type="radio" name="pre1" value="C"> C) Ardor constante en la zona superior</label>
+                    <label><input type="radio" name="pre1" value="D"> D) Quemazón intensa como fuego que sube hacia el pecho</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>2. ¿En qué zona específica concentras el mayor dolor?</legend>
+                    <label><input type="radio" name="pre2" value="A" required> A) En la parte baja del abdomen o zona pélvica</label>
+                    <label><input type="radio" name="pre2" value="B"> B) Alrededor del ombligo con inflamación generalizada</label>
+                    <label><input type="radio" name="pre2" value="C"> C) En el centro del vientre y vientre bajo simultáneamente</label>
+                    <label><input type="radio" name="pre2" value="D"> D) En la "boca del estómago" (parte alta y central del abdomen)</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>3. ¿Con qué momento se relaciona tu molestia?</legend>
+                    <label><input type="radio" name="pre3" value="A" required> A) Con el periodo menstrual / días previos a él</label>
+                    <label><input type="radio" name="pre3" value="B"> B) Con estrés físico / cansancio muscular</label>
+                    <label><input type="radio" name="pre3" value="C"> C) Después de pasar varias horas en ayuno prolongado</label>
+                    <label><input type="radio" name="pre3" value="D"> D) Justo después de comer alimentos irritantes, grasosos o picantes</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>4. ¿Qué otro síntoma acompaña a tu dolor?</legend>
+                    <label><input type="radio" name="pre4" value="A" required> A) Sensación de fatiga o punzadas pélvicas</label>
+                    <label><input type="radio" name="pre4" value="B"> B) Gases / eructos / inflamación visible del vientre</label>
+                    <label><input type="radio" name="pre4" value="C"> C) Sabor amargo en la boca / eructos agrios</label>
+                    <label><input type="radio" name="pre4" value="D"> D) Sensación de que la comida se regresa, con ardor en la garganta</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>5. ¿Qué acción suele disminuir tu molestia?</legend>
+                    <label><input type="radio" name="pre5" value="A" required> A) Aplicar calor en el vientre / descansar en posición fetal</label>
+                    <label><input type="radio" name="pre5" value="B"> B) Reposar o liberar gases acumulados</label>
+                    <label><input type="radio" name="pre5" value="C"> C) Tomar agua</label>
+                    <label><input type="radio" name="pre5" value="D"> D) Evitar acostarme</label>
+                </fieldset>
+
+                <button type="submit" class="botonE">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formulario-largo').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Arreglo con las 5 preguntas activas
+            const respuestas = ['pre1', 'pre2', 'pre3', 'pre4', 'pre5'];
+            let puntosTotales = 0;
+            
+            // Valores para la suma: A=1, B=2 (orientados a Syncol/Cólicos) | C=3, D=4 (orientados a Omeprazol/Gastritis)
+            const valores = { 'A': 1, 'B': 2, 'C': 3, 'D': 4 };
+
+            for (const id of respuestas) {
+                const seleccion = document.querySelector(`input[name="${id}"]:checked`)?.value;
+                if (seleccion && valores[seleccion]) {
+                    puntosTotales += valores[seleccion];
+                }
+            }
+
+            let resultadoRuta = 2;
+            let nombrePastilla = 'Syncol';
+
+            // Evaluación de puntajes (Mínimo: 5, Máximo: 20)
+            if (puntosTotales <= 12) {
+                resultadoRuta = 2;
+                nombrePastilla = 'Syncol';
+            } else {
+                resultadoRuta = 4;
+                nombrePastilla = 'Omeprazol';
+            }
+
+            // Almacenamiento en localStorage exactamente igual a las anteriores
+            localStorage.setItem('resultadoRuta', resultadoRuta);
+            localStorage.setItem('nombrePastilla', nombrePastilla);
+
+            window.location.href = 'rutas.html';
+        });
+    </script>
+    
+</body>
+</html>

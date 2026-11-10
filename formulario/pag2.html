@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cuestionario</title>
+    <link rel="stylesheet" href="../estilo/pag1.css">
+</head>
+<body>
+
+    <div class="rectangulo">
+        <div class="prePRINCI">
+            <form id="formulario-largo">
+
+                <fieldset>
+                    <legend>1. ¿Cómo se manifiesta el dolor en tu garganta?</legend>
+                    <label><input type="radio" name="pre1" value="A" required> A) Sin molestia al hablar o pasar saliva</label>
+                    <label><input type="radio" name="pre1" value="B"> B) Ligera resequedad o necesidad de aclarar la voz</label>
+                    <label><input type="radio" name="pre1" value="C"> C) Ardor o picor constante al tragar saliva</label>
+                    <label><input type="radio" name="pre1" value="D"> D) Dolor intenso, punzante e inflamación severa al comer</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>2. ¿El dolor de garganta se extiende hacia tus oídos?</legend>
+                    <label><input type="radio" name="pre2" value="A" required> A) Mis oídos se sienten normales</label>
+                    <label><input type="radio" name="pre2" value="B"> B) Sensación leve de oídos tapados</label>
+                    <label><input type="radio" name="pre2" value="C"> C) Presión intermitente al bostezar</label>
+                    <label><input type="radio" name="pre2" value="D"> D) Dolor agudo, punzadas profundas en el oído cada vez que trago</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>3. ¿Qué notas al presionar la zona de tu cuello y mandíbula?</legend>
+                    <label><input type="radio" name="pre3" value="A" required> A) Sin dolor al tacto</label>
+                    <label><input type="radio" name="pre3" value="B"> B) Ligera tensión muscular</label>
+                    <label><input type="radio" name="pre3" value="C"> C) Sensibilidad al presionar debajo de la mandíbula</label>
+                    <label><input type="radio" name="pre3" value="D"> D) Inflamación sensible, dolor intenso al tocar</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>4. ¿Cómo esta tu temperatura corporal?</legend>
+                    <label><input type="radio" name="pre4" value="A" required> A) Temperatura totalmente normal</label>
+                    <label><input type="radio" name="pre4" value="B"> B) Siento la cara un poco caliente</label>
+                    <label><input type="radio" name="pre4" value="C"> C) Fiebre moderada acompañada de escalofríos</label>
+                    <label><input type="radio" name="pre4" value="D"> D) Fiebre alta, con cuerpo cortado y sudoración</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>5. ¿Aparece tos o mucosidad en tu garganta?</legend>
+                    <label><input type="radio" name="pre5" value="A" required> A) Cero tos, vías respiratorias totalmente limpias</label>
+                    <label><input type="radio" name="pre5" value="B"> B) Tos seca leve por carraspera</label>
+                    <label><input type="radio" name="pre5" value="C"> C) Tos seca constante que raspa el pecho</label>
+                    <label><input type="radio" name="pre5" value="D"> D) Tos frecuente acompañada de flemas espesas o amarillas</label>
+                </fieldset>
+
+                <button type="submit" class="botonE">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formulario-largo').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Arreglo con las 5 preguntas activas
+            const respuestas = ['pre1', 'pre2', 'pre3', 'pre4', 'pre5'];
+            let puntosTotales = 0;
+            
+            // Valores asignados a cada opción (A=1, B=2, C=3, D=4)
+            const valores = { 'A': 1, 'B': 2, 'C': 3, 'D': 4 };
+
+            for (const id of respuestas) {
+                const seleccion = document.querySelector(`input[name="${id}"]:checked`)?.value;
+                if (seleccion && valores[seleccion]) {
+                    puntosTotales += valores[seleccion];
+                }
+            }
+
+            let resultadoRuta = 1;
+            let nombrePastilla = 'Paracetamol';
+
+            // Evaluación de la suma (Mínimo: 5, Máximo: 20)
+            if (puntosTotales <= 12) {
+                resultadoRuta = 1;
+                nombrePastilla = 'Paracetamol';
+            } else {
+                resultadoRuta = 3;
+                nombrePastilla = 'Next';
+            }
+
+            // Guardado en localStorage de las variables que ya utilizas
+            localStorage.setItem('resultadoRuta', resultadoRuta);
+            localStorage.setItem('nombrePastilla', nombrePastilla);
+
+            window.location.href = 'rutas.html';
+        });
+    </script>
+    
+</body>
+</html>

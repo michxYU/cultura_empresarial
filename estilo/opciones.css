@@ -1,0 +1,186 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    background-color: #d0edff; /* Tu color azul claro de fondo seleccionado */
+    overflow: hidden; /* Evita que la pantalla cree barras de scroll externas */
+}
+
+.mujer{
+    width: 240px;
+    height: 170px;
+}
+/* Desactivamos el fondo diagonal viejo */
+.fondo-diagonal {
+    display: none !important;
+}
+
+/* ==========================================================================
+   2. CONTENEDOR GENERAL (Pantalla Completa Fija)
+   ========================================================================== */
+.contenido-opciones {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   3. LA TARJETA BLANCA (SIMÉTRICA Y CON MARGEN REDUCIDO)
+   ========================================================================== */
+.tarjeta-opciones {
+    position: absolute; 
+    background-color: #ffffff !important;
+    
+    top: 10px !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+    
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    
+    /* El scroll vertical se activa DENTRO de lo blanco para proteger el margen azul exterior */
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    
+    border-radius: 10px !important; /* Esquinas redondeadas masivas */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+    
+    padding: 10px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; 
+    box-sizing: border-box;
+}
+
+/* Ocultar barra de scroll en navegadores modernos para mantenerlo estético */
+.tarjeta-opciones::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* ==========================================================================
+   4. TEXTOS DE BIENVENIDA ADAPTATIVOS
+   ========================================================================== */
+.pregunta {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.15rem !important; 
+    color: #000000;
+    margin: 0 0 5px 0;
+    text-align: center;
+    line-height: 1.;
+    margin-top: 20px;
+}
+
+.pregunta::after {
+    content: "Marca la alternativa de tu interés";
+    display: block;
+    font-size: 0.85rem !important; 
+    font-weight: normal;
+    color: #7f8c8d;
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+
+/* ==========================================================================
+   5. ESPACIO LIBRE RESERVADO EXACTAMENTE PARA TU ILUSTRACIÓN
+   ========================================================================== */
+.contenedor-botones {
+    margin-top: 40px;
+    width: 100%;
+}
+
+/* ==========================================================================
+   6. DISEÑO DE BOTONES EXTRA PEQUEÑOS EN TONOS PASTEL DELICADOS
+   ========================================================================== */
+.contenedor-botones {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+    width: 100%;
+    /* CAMBIO: Reducido a 230px de ancho máximo para que los botones sean súper compactos y finos */
+    max-width: 230px; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -2px;
+    margin-bottom: 10px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.botonE {
+    border: 1.5px solid #2c3e50 !important;
+    border-radius: 50px !important; 
+    /* CAMBIO: Relleno vertical reducido a 8px para achicar bastante el grosor del botón */
+    padding: 8px 16px !important; 
+    font-size: 13px !important; /* CAMBIO: Tipografía de 13px, mucho más sutil y limpia */
+    font-family: sans-serif !important;
+    cursor: pointer;
+    width: 100% !important;
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease !important; 
+}
+
+/* Botón 1: Enviar al formulario (Morado Lavanda Muy Clarito) */
+.contenedor-botones .botonE:nth-child(1) {
+    background-color: #f3eefc !important; 
+    color: #1c1b1b !important;
+}
+
+.contenedor-botones .botonE:nth-child(1):hover,
+.contenedor-botones .botonE:nth-child(1):active {
+    background-color: #e8dff7 !important; 
+    transform: scale(1.02) !important;
+}
+
+/* Botón 2: Elegir pastilla (Azul Cielo Muy Clarito) */
+.contenedor-botones .botonE:nth-child(2) {
+    background-color: #e1f5fe !important; 
+    color: #1c1b1b !important;
+}
+
+.contenedor-botones .botonE:nth-child(2):hover,
+.contenedor-botones .botonE:nth-child(2):active {
+    background-color: #b3e5fc !important; 
+    transform: scale(1.02) !important;
+}
+
+/* ==========================================================================
+   7. CONTROL ADAPTABLE PARA PANTALLAS GRANDES DE COMPUTADORA
+   ========================================================================== */
+@media (min-width: 768px) {
+    .tarjeta-opciones {
+        top: 20px !important;
+        bottom: 20px !important;
+        left: 20px !important;
+        right: 20px !important;
+        padding: 50px 40px;
+    }
+
+    .pregunta {
+        font-size: 1.6rem !important; 
+    }
+    
+    .pregunta::after {
+        font-size: 1rem !important;
+    }
+
+    .contenedor-botones {
+        max-width: 260px; /* En PC crecen mínimamente para mantener simetría */
+    }
+
+    .botonE {
+        font-size: 14px !important;
+        padding: 10px 18px !important;
+    }
+}

@@ -1,0 +1,148 @@
+/* Base de la página y fondo general de la pantalla */
+body {background-size: cover !important;
+    background-position: center !important;
+    background-color: #f7f6f0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important; /* Elimina cualquier rastro de scroll en la ventana global */
+    font-family: Arial, sans-serif !important;
+}
+
+/* Contenedor flexible que se adapta fluidamente al ancho de CUALQUIER pantalla sin desbordar */
+.rectangulo {
+    width: 100% !important;
+    max-width: 400px !important; /* Límite óptimo para que no se estire infinito en PC y quepa en celulares */
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+}
+
+/* Alineación interna libre de medidas rígidas */
+.contenedor-resultado {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+}
+
+/* Espacio reservado para el corazón superior */
+.contenedor-resultado::before {
+    content: "" !important;
+    display: block !important;
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 auto 8px auto !important;
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    flex-shrink: 0 !important;
+    background-image: url('/imagenes/corazon.png') !important; 
+}
+
+/* Título adaptable con tamaño controlado para pantallas pequeñas */
+.contenedor-resultado h1 {
+    font-size: 1.5rem !important;
+    color: #233b2e !important; 
+    margin: 0 0 6px 0 !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    width: 100% !important;
+}
+
+/* Número de la ruta */
+.numero-ruta {
+    font-size: 2.8rem !important;
+    font-weight: bold !important;
+    color: #233b2e !important;
+    margin: 0 0 6px 0 !important;
+    text-align: center !important;
+    line-height: 1 !important;
+}
+
+
+
+/* Botones 100% fluidos con esquinas redondeadas garantizadas */
+button.botonE {
+    width: 90% !important; /* Deja un margen seguro a los lados para evitar desborde horizontal */
+    max-width: 340px !important;
+    border: none !important;
+    border-radius: 50px !important; /* Redondeado perfecto y permanente */
+    padding: 14px 20px !important;
+    cursor: pointer !important;
+    display: block !important;
+    margin: 8px auto !important;
+    font-size: 1.05rem !important;
+    font-weight: bold !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04) !important;
+    flex-shrink: 0 !important;
+    outline: none !important;
+    
+    /* Animación de crecimiento limpia al 15% */
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important, 
+                background-color 0.2s ease !important, 
+                color 0.2s ease !important;
+}
+
+/* Mantiene el redondeado total en cualquier interacción del usuario */
+button.botonE:hover, button.botonE:active, button.botonE:focus {
+    border-radius: 50px !important;
+}
+
+/* Botón Conectar Bluetooth: Verde pastel cálido */
+#btnConectar {
+    background-color: #bad3ab !important; 
+    color: #1c3226 !important; 
+}
+
+#btnConectar:hover, #btnConectar:active {
+    background-color: #a3c292 !important; 
+    color: #112018 !important;
+    transform: scale(1.15) !important;
+}
+
+/* Botón Comprar: Verde oliva complementario */
+#btnComprar {
+    background-color: #ccdcb9 !important; 
+    color: #1c3226 !important;
+    margin-top: 8px !important;
+}
+
+#btnComprar:hover, #btnComprar:active {
+    background-color: #b3cb99 !important; 
+    color: #112018 !important;
+    transform: scale(1.15) !important;
+}
+
+/* Texto de estado inferior */
+#estado {
+    font-size: 0.9rem !important;
+    color: #55665c !important; 
+    margin: 4px 0 !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    width: 100% !important;
+}
+
+/* Mensajes de advertencia en rojo */
+#estado[style*="color: rgb(255, 204, 204)"],
+#estado[style*="color: #ffcccc"] {
+    color: #d63030 !important; 
+    font-weight: bold !important;
+}
+
+/* Mensaje de éxito en verde */
+#estado[style*="color: rgb(212, 237, 218)"],
+#estado[style*="color: #d4edda"] {
+    color: #388e3c !important;
+    font-weight: bold !important;
+}

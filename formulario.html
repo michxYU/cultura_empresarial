@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="estilo/formulario.css">
+</head>
+<body>
+
+    <div class="rectangulo">
+        <div class="prePRINCI">
+            <form id="mi-formulario">
+                
+                <fieldset>
+                    <legend>¿Cuál de los siguientes síntomas o malestares presenta actualmente?</legend>
+                
+                    <label><input type="radio" name="pregunta1" value="cabeza" required> A) Dolor de cabeza</label>
+                    <label><input type="radio" name="pregunta1" value="garganta"> B) Dolor de garganta</label>
+                    <label><input type="radio" name="pregunta1" value="estomago"> C) Dolor de estómago / abdomen</label>
+                    <label><input type="radio" name="pregunta1" value="muscular"> D) Dolor muscular</label>
+                    <label><input type="radio" name="pregunta1" value="ojos"> E) Ojos llorosos</label>
+                    <label><input type="radio" name="pregunta1" value="estornudos"> F) Fuertes estornudos</label>
+                </fieldset>
+
+                <button type="submit" class="botonE">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('mi-formulario').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const opcionSeleccionada = document.querySelector('input[name="pregunta1"]:checked');
+
+            if (opcionSeleccionada) {
+                const valor = opcionSeleccionada.value;
+                let paginaDestino = '';
+
+                switch (valor) {
+                    case 'cabeza':
+                        paginaDestino='formulario/pag1.html';
+                        break;
+                    case 'garganta':
+                        paginaDestino='formulario/pag2.html';
+                        break;
+                    case 'estomago':
+                        paginaDestino='formulario/pag3.html';
+                        break;
+                    case 'muscular':
+                        paginaDestino='formulario/pag4.html';
+                        break;
+                    case 'nasal':
+                        paginaDestino='formulario/pag5.html';
+                        break;
+                    case 'ojos':
+                        paginaDestino='formulario/pag5.html';
+                        break;
+                    case 'estornudos':
+                        paginaDestino='formulario/pag5.html';
+                        break;
+                    default:
+                        paginaDestino='error.html';
+                }
+                window.location.href = paginaDestino;
+            }
+        });
+    </script>
+    
+</body>
+</html>

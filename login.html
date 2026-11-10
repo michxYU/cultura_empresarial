@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="estilo/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="fondo-diagonal">
+        <div class="mancha"><img src="imagenes/mancha.png" class="ima"></div>
+        <p class="hola">Hola!!</p><br>
+        <p class="abajo">bienvenido a mvm</p>
+    </div>
+
+    <div class="contenido-login">
+        
+        <div class="tarjeta-login">
+
+            <div class="mancha2"><img src="imagenes/mancha2.png" class="ima2"></div>
+
+            <center>
+             <h1 class="titulo-principal">
+                 <span class="linea-arriba">Login</span><br>
+                 <span class="linea-abajo">Ingrese su numero de control</span>
+             </h1>
+            </center>
+             
+            <form id="formulario-login">
+                <input type="text" id="usuario" placeholder="Número de control" required class="caja-texto">
+                
+                <div id="mensaje-error" style="color: #de3b81; font-size: 14px; font-family: sans-serif; display: none; text-align: center; margin-top: -5px;"></div>
+
+                <button type="submit" class="botonE">Ingresar</button>
+            </form>
+            
+        </div>
+
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://dfjqhxikhlhzhrygkejl.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_reXz-pQkUoBtW7yo0W_KmA_R6kuNN9R';
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        document.getElementById('formulario-login').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const usuarioInput = document.getElementById('usuario').value.trim();
+            const mensajeError = document.getElementById('mensaje-error');
+
+            // Regla de validación del número de control
+            const reglaNumeroControl = /^(20|21|22|23|24|25|26)(63{1,2})\d{4}$/;
+
+            if (!reglaNumeroControl.test(usuarioInput)) {
+                mensajeError.textContent = "Número de control incorrecto o inexistente";
+                mensajeError.style.display = "block";
+                return;
+            }
+
+            // Obtener fecha de hoy en formato YYYY-MM-DD
+            const hoy = new Date().toISOString().split('T')[0];
+
+            try {
+                // Consultar en la base de datos si el usuario ingresó hoy
+                const { data: registrosExistentes, error: errorConsulta } = await supabaseClient
+                    .from('registros_login')
+                    .select('*')
+                    .eq('numero_control', usuarioInput)
+                    .eq('fecha_acceso', hoy);
+
+                if (errorConsulta) throw errorConsulta;
+
+                // Bloquear el acceso si ya existe un registro del día de hoy
+                if (registrosExistentes.length > 0) {
+                    mensajeError.textContent = "Ya has ingresado sesión el día de hoy. Intenta mañana.";
+                    mensajeError.style.display = "block";
+                    return;
+                }
+
+                // Guardar la fecha y usuario si es su primer intento del día
+                const { error: errorInsercion } = await supabaseClient
+                    .from('registros_login')
+                    .insert([{ numero_control: usuarioInput, fecha_acceso: hoy }]);
+
+                if (errorInsercion) throw errorInsercion;
+
+                // Si todo sale bien, guardar en localStorage y redirigir
+                mensajeError.style.display = "none";
+                localStorage.setItem('usuarioGuardado', usuarioInput);
+                window.location.href = 'opciones.html';
+
+            } catch (error) {
+                console.error("Error en Supabase:", error);
+                mensajeError.textContent = "Error al verificar el acceso. Inténtalo de nuevo.";
+                mensajeError.style.display = "block";
+            }
+        });
+    </script>
+
+</body>
+</html>

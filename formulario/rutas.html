@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado</title>
+    <link rel="stylesheet" href="../estilo/rutas.css">
+</head>
+<body>
+
+    <div class="rectangulo">
+        <div class="contenedor-resultado">
+            <h1>Estas a punto de comprar:</h1>
+            <div class="numero-ruta" id="valor-ruta">--</div>
+
+            <!-- Botón para conectar el Bluetooth -->
+            <button class="botonE" id="btnConectar" onclick="conectarBluetooth()">Conectar Bluetooth</button>
+            <p id="estado">Estado: Desconectado</p>
+
+            <!-- Botón de Comprar / Dispensar -->
+            <!-- Botón de Comprar / Dispensar con ID agregado -->
+             <button class="botonE" id="btnComprar" onclick="enviarResultadoAlESP32()">Comprar</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Recuperar el resultado y el nombre de la pastilla del localStorage al cargar la página
+        const resultadoRuta = localStorage.getItem('resultadoRuta');
+        const nombrePastilla = localStorage.getItem('nombrePastilla');
+        const elementoRuta = id => document.getElementById(id);
+        
+        if (nombrePastilla) {
+            elementoRuta('valor-ruta').textContent = nombrePastilla;
+        } else if (resultadoRuta) {
+            elementoRuta('valor-ruta').textContent = resultadoRuta;
+        } else {
+            elementoRuta('valor-ruta').textContent = "Sin resultado";
+        }
+
+        // Variables para la conexión Bluetooth
+        let bluetoothDevice;
+        let bluetoothCharacteristic;
+
+        const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+        const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a9";
+
+        // 2. Función para conectar por Bluetooth (¡Esta era la que faltaba!)
+        async function conectarBluetooth() {
+            try {
+                elementoRuta('estado').innerText = "Estado: Buscando dispositivo...";
+                
+                bluetoothDevice = await navigator.bluetooth.requestDevice({
+                    filters: [{ name: 'DispensadorESP32' }],
+                    optionalServices: [SERVICE_UUID]
+                });
+
+                const server = await bluetoothDevice.gatt.connect();
+                const service = await server.getPrimaryService(SERVICE_UUID);
+                bluetoothCharacteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
+
+                elementoRuta('estado').innerText = "Estado: ¡Conectado!";
+                elementoRuta('estado').style.color = "#d4edda";
+            } catch (error) {
+                console.log("Error: ", error);
+                elementoRuta('estado').innerText = "Estado: Error al conectar";
+                elementoRuta('estado').style.color = "#ffcccc";
+            }
+        }
+
+        // 3. Función que se ejecuta al presionar "Comprar"
+async function enviarResultadoAlESP32() {
+    const elementoEstado = elementoRuta('estado');
+    const botonComprar = elementoRuta('btnComprar'); // Capturamos el botón
+
+    // Validar si el Bluetooth NO está conectado
+    if (!bluetoothCharacteristic) {
+        elementoEstado.innerText = "¡Primero debes conectar el Bluetooth!";
+        elementoEstado.style.color = "#ffcccc"; 
+        return; 
+    }
+
+    // Validar si hay un resultado válido guardado
+    if (!resultadoRuta || resultadoRuta === "Sin resultado") {
+        elementoEstado.innerText = "No hay un número de resultado válido.";
+        elementoEstado.style.color = "#ffcccc";
+        return; 
+    }
+
+    // ====================================================================
+    // ¡LA CORRECCIÓN ESTÁ AQUÍ!
+    // Desactivamos el botón INMEDIATAMENTE para que no puedan dar doble clic
+    // ====================================================================
+    botonComprar.disabled = true;
+
+    try {
+        elementoEstado.style.color = "white";
+        elementoEstado.innerText = "Enviando orden...";
+
+        const encoder = new TextEncoder();
+        // Ahora sí, mandamos el dato de forma segura por el aire
+        await bluetoothCharacteristic.writeValue(encoder.encode(resultadoRuta));
+        
+        console.log("Número enviado al ESP32: " + resultadoRuta);
+        elementoEstado.innerText = "¡Orden enviada con éxito!";
+        elementoEstado.style.color = "#d4edda"; 
+
+    } catch (error) {
+        console.log("Error al enviar dato: ", error);
+        elementoEstado.innerText = "Error al enviar el comando.";
+        elementoEstado.style.color = "#ffcccc";
+        
+        // Si REALMENTE hubo un error de señal y no se mandó nada, 
+        // le reactivamos el botón para que pueda volver a intentar
+        botonComprar.disabled = false;
+    }
+}
+
+
+    </script>
+    
+</body>
+</html>
